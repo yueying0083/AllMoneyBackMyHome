@@ -17,6 +17,7 @@ rm -rf "$APP_DIR"
 mkdir -p "$CONTENTS_DIR/MacOS" "$CONTENTS_DIR/Resources"
 cp "$BUILD_DIR/AMBH" "$CONTENTS_DIR/MacOS/AMBH"
 cp "$ROOT_DIR/support/Info.plist" "$CONTENTS_DIR/Info.plist"
+cp "$ROOT_DIR/assets/AMBH.icns" "$CONTENTS_DIR/Resources/AMBH.icns"
 chmod +x "$CONTENTS_DIR/MacOS/AMBH"
 codesign --force --deep --sign - "$APP_DIR"
 

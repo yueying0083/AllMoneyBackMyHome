@@ -6,6 +6,8 @@
 
 AMBH（All Money Back My Home）是一个原生 macOS 菜单栏股票行情 App。它只驻留在菜单栏，不显示 Dock 图标，适合用较少的屏幕空间持续查看沪深股票和指数。
 
+<img src="assets/AMBH-AppIcon.png" alt="AMBH App 图标" width="128">
+
 ![AMBH 自选行情](docs/images/watchlist.png)
 
 ## 功能

@@ -8,6 +8,8 @@
     <string>AMBH</string>
     <key>CFBundleIdentifier</key>
     <string>com.ambh.menubar</string>
+    <key>CFBundleIconFile</key>
+    <string>AMBH</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
