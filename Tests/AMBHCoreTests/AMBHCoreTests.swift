@@ -59,8 +59,10 @@ final class AMBHCoreTests: XCTestCase {
     func testChinaTradingSessionAxis() {
         XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "09:30"), 0)
         XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "11:30"), 120)
-        XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "13:00"), 210)
-        XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "15:00"), 330)
+        XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "13:00"), 120)
+        XCTAssertEqual(ChinaTradingSession.minuteOffset(for: "15:00"), 240)
+        XCTAssertEqual(ChinaTradingSession.tradingDuration, 240)
+        XCTAssertNil(ChinaTradingSession.minuteOffset(for: "12:00"))
         XCTAssertNil(ChinaTradingSession.minuteOffset(for: "09:29"))
     }
 

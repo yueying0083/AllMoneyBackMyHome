@@ -397,27 +397,18 @@ private struct FixedSessionChart: View {
                 context.stroke(baseline, with: .color(.secondary.opacity(0.35)), style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
             }
 
-            var morningPath = Path()
-            var afternoonPath = Path()
-            var hasMorningPoint = false
-            var hasAfternoonPoint = false
+            var pricePath = Path()
+            var hasPoint = false
             for point in points {
                 guard let offset = ChinaTradingSession.minuteOffset(for: point.minute) else { continue }
-                let minute = offset + ChinaTradingSession.startMinute
-                let x = size.width * CGFloat(offset) / CGFloat(ChinaTradingSession.endMinute - ChinaTradingSession.startMinute)
+                let x = size.width * CGFloat(offset) / CGFloat(ChinaTradingSession.tradingDuration)
                 let coordinate = CGPoint(x: x, y: y(point.price))
-                if minute <= ChinaTradingSession.morningEndMinute {
-                    hasMorningPoint ? morningPath.addLine(to: coordinate) : morningPath.move(to: coordinate)
-                    hasMorningPoint = true
-                } else if minute >= ChinaTradingSession.afternoonStartMinute {
-                    hasAfternoonPoint ? afternoonPath.addLine(to: coordinate) : afternoonPath.move(to: coordinate)
-                    hasAfternoonPoint = true
-                }
+                hasPoint ? pricePath.addLine(to: coordinate) : pricePath.move(to: coordinate)
+                hasPoint = true
             }
             let lastPrice = points.last?.price ?? center
             let color: Color = lastPrice >= center ? .red : .green
-            context.stroke(morningPath, with: .color(color), style: StrokeStyle(lineWidth: 1.2, lineJoin: .round))
-            context.stroke(afternoonPath, with: .color(color), style: StrokeStyle(lineWidth: 1.2, lineJoin: .round))
+            context.stroke(pricePath, with: .color(color), style: StrokeStyle(lineWidth: 1.2, lineJoin: .round))
         }
         .background(Color.secondary.opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 4))

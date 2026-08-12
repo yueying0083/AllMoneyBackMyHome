@@ -149,6 +149,7 @@ public enum ChinaTradingSession {
     public static let morningEndMinute = 11 * 60 + 30
     public static let afternoonStartMinute = 13 * 60
     public static let endMinute = 15 * 60
+    public static let tradingDuration = (morningEndMinute - startMinute) + (endMinute - afternoonStartMinute)
 
     public static func minuteOffset(for value: String) -> Int? {
         let parts = value.split(separator: ":")
@@ -156,8 +157,13 @@ public enum ChinaTradingSession {
               let hour = Int(parts[0]),
               let minute = Int(parts[1]) else { return nil }
         let absolute = hour * 60 + minute
-        guard (startMinute...endMinute).contains(absolute) else { return nil }
-        return absolute - startMinute
+        if (startMinute...morningEndMinute).contains(absolute) {
+            return absolute - startMinute
+        }
+        if (afternoonStartMinute...endMinute).contains(absolute) {
+            return morningEndMinute - startMinute + absolute - afternoonStartMinute
+        }
+        return nil
     }
 }
 
