@@ -35,10 +35,10 @@ final class AMBHCoreTests: XCTestCase {
     func testSinaParser() throws {
         let symbol = try SecuritySymbol.parse("000001")
         let payload = "var hq_str_sz000001=\"平安银行,11.260,11.260,11.220,11.290,11.200,11.220,11.230,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2026-08-12,10:18:15,00\";"
-        let quote = try SinaQuoteProvider.parse(data: gbData(payload), expected: [symbol])[symbol]
-        XCTAssertEqual(quote?.name, "平安银行")
-        XCTAssertEqual(quote?.price, 11.22)
-        XCTAssertEqual(quote?.change, -0.04, accuracy: 0.0001)
+        let quote = try XCTUnwrap(SinaQuoteProvider.parse(data: gbData(payload), expected: [symbol])[symbol])
+        XCTAssertEqual(quote.name, "平安银行")
+        XCTAssertEqual(quote.price, 11.22)
+        XCTAssertEqual(quote.change, -0.04, accuracy: 0.0001)
     }
 
     func testMalformedResponses() throws {
