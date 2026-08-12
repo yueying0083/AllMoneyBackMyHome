@@ -49,7 +49,7 @@ open dist/AMBH.app
 生成与 GitHub Release 相同格式的 ZIP：
 
 ```bash
-./scripts/package-release.sh v1.0.0
+./scripts/package-release.sh v1.0.1
 ```
 
 仓库同时保留标准 Swift Package 配置。安装状态正常的 Xcode/SwiftPM 环境可运行：
