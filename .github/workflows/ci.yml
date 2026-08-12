@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    name: Test and build
+    runs-on: macos-15
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Run Swift package tests
+        run: swift test
+
+      - name: Run direct core checks
+        run: ./scripts/test-direct.sh
+
+      - name: Build app bundle
+        run: ./scripts/build-app.sh
+
+      - name: Verify app bundle
+        run: |
+          plutil -lint dist/AMBH.app/Contents/Info.plist
+          codesign --verify --deep --strict dist/AMBH.app
+
+      - name: Package CI artifact
+        run: ./scripts/package-release.sh ci
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: AMBH-${{ runner.arch }}
+          path: dist/release/*
+          if-no-files-found: error
+          retention-days: 14

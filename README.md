@@ -1,5 +1,9 @@
 # AMBH
 
+[![CI](https://github.com/yueying0083/AllMoneyBackMyHome/actions/workflows/ci.yml/badge.svg)](https://github.com/yueying0083/AllMoneyBackMyHome/actions/workflows/ci.yml)
+[![Release](https://github.com/yueying0083/AllMoneyBackMyHome/actions/workflows/release.yml/badge.svg)](https://github.com/yueying0083/AllMoneyBackMyHome/actions/workflows/release.yml)
+[![Latest release](https://img.shields.io/github/v/release/yueying0083/AllMoneyBackMyHome)](https://github.com/yueying0083/AllMoneyBackMyHome/releases/latest)
+
 AMBH（All Money Back My Home）是一个原生 macOS 菜单栏股票行情 App。它只驻留在菜单栏，不显示 Dock 图标，适合用较少的屏幕空间持续查看沪深股票和指数。
 
 ![AMBH 自选行情](docs/images/watchlist.png)
@@ -24,6 +28,12 @@ AMBH（All Money Back My Home）是一个原生 macOS 菜单栏股票行情 App�
 - Swift 6 工具链，推荐安装完整 Xcode
 - 构建时链接 macOS 系统 `libcurl`
 
+## 下载
+
+从 [GitHub Releases](https://github.com/yueying0083/AllMoneyBackMyHome/releases/latest) 下载 Apple Silicon（arm64）ZIP，解压后打开 `AMBH.app`。
+
+Release 附件同时提供 SHA-256 校验文件。当前发布包使用 ad-hoc 签名，未进行 Apple 公证；首次运行若被 Gatekeeper 阻止，可在“系统设置 > 隐私与安全性”中确认打开。
+
 ## 构建与运行
 
 ```bash
@@ -33,6 +43,12 @@ open dist/AMBH.app
 ```
 
 构建产物位于 `dist/AMBH.app`。脚本会为本机运行执行 ad-hoc 签名；未进行 Developer ID 签名或 Apple 公证，不适合直接作为公开发行包分发。
+
+生成与 GitHub Release 相同格式的 ZIP：
+
+```bash
+./scripts/package-release.sh v1.0.0
+```
 
 仓库同时保留标准 Swift Package 配置。安装状态正常的 Xcode/SwiftPM 环境可运行：
 
