@@ -1,0 +1,5 @@
+module CCurlShim {
+    header "CCurlShim.h"
+    link "curl"
+    export *
+}
